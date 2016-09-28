@@ -5,11 +5,27 @@ angular.module('chatroom').controller('mainCtrl', function($scope, messageServic
   //your controllers $scope as messages ($scope.messages)
 
 
+  $scope.getMessages = function() {
+    messageService.getMessages().then(function(response){
+      console.log(1111, response);
+
+      $scope.messages = response.data;
+    });
+  }
+
+  $scope.getMessages();
 
   //The postMessage function will take whatever the user typed in (hint: look at the html and see what ng-model correlates to on the input box),
   //pass that text to the postMessage method on the messageService object which will then post it to the backend.
 
+  $scope.postMessage = function(message){
+    messageService.postMessages(message).then(function(response){
+      $scope.getMessages();
 
+      $scope.message = '';
+    })
+
+  };
 
 
   //uncomment this code when your getMessages function is finished
